@@ -36,6 +36,3 @@ const PROJECTS = [
     download: "https://github.com/zakkyhidayat/quran/releases",
   },
 ];
-
-// "Now" section: what you are currently building. Leave empty to hide it.
-const NOW = [];

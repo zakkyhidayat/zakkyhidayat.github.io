@@ -26,11 +26,6 @@ PROJECTS.forEach(p => {
   list.appendChild(li);
 });
 
-if (NOW.length) {
-  document.getElementById("now-list").innerHTML = NOW.map(n => `<li>${n}</li>`).join("");
-  document.getElementById("now").hidden = false;
-}
-
 // Local time in Bandung (WIB, UTC+7)
 const clock = document.getElementById("clock");
 const tick = () => {
