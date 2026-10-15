@@ -25,11 +25,11 @@ const PROJECTS = [
   },
   {
     title: "Quran",
-    summary: "Read the Qur'an in the Uthmani script of the Madani mushaf, page for page like the printed edition: 604 pages, 15 lines, with tajweed colouring. Translations, bookmarks, search, and reading reminders. No ads, no account, no tracking.",
+    summary: "Read the Qur'an in the Uthmani script of the Madani mushaf, page for page like the printed edition: 604 pages, 15 lines, with tajweed colouring. Translations, search, bookmarks, reading reminders, and an interface in 10 languages. No ads, no account, no tracking.",
     icon: "assets/img/projects/quran-icon.png",
     tint: "#1b6b4a",
     platform: "Android 8.0+",
-    version: "v0.2.0",
+    version: "v0.5.2",
     why: "Built because I wanted a simple, modern-looking app that gets straight to reading the Quran, with audio recitation planned as an extra.",
     tags: ["App", "Quran", "Material 3"],
     repo: "https://github.com/zakkyhidayat/quran",
