@@ -1,7 +1,4 @@
 // Edit the project list here. Leave live/download/why empty if not available.
-// To add a project: copy an entry, set title, summary, icon, platform, tags and, if the code is on
-// GitHub, repo ("https://github.com/<user>/<name>"). The version badge then updates itself from the
-// repo's latest stable GitHub Release; `version` below is only the fallback shown if that lookup fails.
 const PROJECTS = [
   {
     title: "Baca PDF",

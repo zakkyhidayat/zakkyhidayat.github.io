@@ -1,29 +1,3 @@
-// Latest release per project, read live from GitHub Releases and cached for an hour.
-// Any project with a GitHub `repo` is checked; the static `version` in projects.js is the fallback
-// (offline, rate-limited, no release yet). Only stable releases with a version tag count, so
-// data/asset releases such as "quran-data" are ignored.
-const REL_TTL = 60 * 60 * 1000;
-const repoSlug = url => (String(url).match(/github\.com\/([^/]+\/[^/#?]+)/) || [])[1];
-const readCache = slug => {
-  try { const c = JSON.parse(localStorage.getItem("rel:" + slug)); return c && Date.now() - c.t < REL_TTL ? c : null; } catch (e) { return null; }
-};
-const writeCache = (slug, c) => { try { localStorage.setItem("rel:" + slug, JSON.stringify({ ...c, t: Date.now() })); } catch (e) {} };
-async function latestRelease(slug) {
-  const cached = readCache(slug);
-  if (cached) return cached;
-  const ctl = new AbortController();
-  const timer = setTimeout(() => ctl.abort(), 4000);
-  try {
-    const res = await fetch(`https://api.github.com/repos/${slug}/releases?per_page=15`, { signal: ctl.signal, headers: { Accept: "application/vnd.github+json" } });
-    if (!res.ok) return null;
-    const rel = (await res.json()).find(r => !r.draft && !r.prerelease && /^v?\d+(\.\d+)*/.test(r.tag_name));
-    if (!rel) return null;
-    const out = { v: /^v/.test(rel.tag_name) ? rel.tag_name : "v" + rel.tag_name, d: (rel.published_at || "").slice(0, 10) };
-    writeCache(slug, out);
-    return out;
-  } catch (e) { return null; } finally { clearTimeout(timer); }
-}
-
 const list = document.getElementById("projects");
 PROJECTS.forEach(p => {
   const li = document.createElement("li");
@@ -50,14 +24,6 @@ PROJECTS.forEach(p => {
       <div class="project-links">${links}</div>
     </div>`;
   list.appendChild(li);
-
-  const slug = p.repo && repoSlug(p.repo);
-  if (slug) latestRelease(slug).then(r => {
-    if (!r) return;
-    const meta = li.querySelector(".meta");
-    meta.textContent = [p.platform, r.v].filter(Boolean).join(" · ");
-    if (r.d) meta.title = `Released ${r.d}`;
-  });
 });
 
 if (NOW.length) {
