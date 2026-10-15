@@ -1,8 +1,7 @@
 const list = document.getElementById("projects");
-PROJECTS.forEach((p, i) => {
+PROJECTS.forEach(p => {
   const li = document.createElement("li");
   li.className = p.image ? "project" : "project icon-card";
-  const num = String(i + 1).padStart(2, "0");
   const links = [
     p.live && `<a href="${p.live}">Open live ↗</a>`,
     p.download && `<a href="${p.download}">Download ↗</a>`,
@@ -17,7 +16,7 @@ PROJECTS.forEach((p, i) => {
   li.innerHTML = `
     ${media}
     <div class="body">
-      <div class="project-head"><span class="meta">${[p.platform, p.version].filter(Boolean).join(" · ")}</span><span class="idx">${num}</span></div>
+      <div class="project-head"><span class="meta">${[p.platform, p.version].filter(Boolean).join(" · ")}</span></div>
       <h3>${titleIcon}${p.title}</h3>
       <p>${p.summary}</p>
       ${p.why ? `<p class="why">${p.why}</p>` : ""}
@@ -50,6 +49,21 @@ document.getElementById("theme-toggle").addEventListener("click", () => {
     : matchMedia("(prefers-color-scheme: dark)").matches;
   root.dataset.theme = dark ? "light" : "dark";
   try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+  setThemeColor(root.dataset.theme);
+});
+if (root.dataset.theme) setThemeColor(root.dataset.theme);
+
+// Copy email
+const copyBtn = document.getElementById("copy-email");
+const copyStatus = document.getElementById("copy-status");
+if (copyBtn) copyBtn.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(copyBtn.dataset.email);
+    copyStatus.textContent = "Copied";
+  } catch (e) {
+    copyStatus.textContent = copyBtn.dataset.email;
+  }
+  setTimeout(() => { copyStatus.textContent = ""; }, 2500);
 });
 
 // ---------- motion layer ----------
@@ -57,7 +71,7 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // 1. Reveal on scroll (cards stagger)
 const revealTargets = [
-  ...document.querySelectorAll(".block .label, .cv-summary, .sub, .rows > li, .cv-grid > div, .note p"),
+  ...document.querySelectorAll(".block .label, .section-note, .cv-summary, .sub, .rows > li, .cv-grid > div, .contact-line, .contact-actions"),
   ...document.querySelectorAll(".project"),
 ];
 document.querySelectorAll(".project").forEach((el, i) => el.style.setProperty("--d", `${(i % 3) * 90}ms`));
@@ -69,6 +83,7 @@ revealTargets.forEach(el => revealObs.observe(el));
 
 // 2. Type the name once
 const nameEl = document.getElementById("name");
+if (reduce) nameEl && nameEl.parentElement.classList.add("done");
 if (!reduce && nameEl) {
   const full = nameEl.textContent;
   const h1 = nameEl.parentElement;
@@ -79,7 +94,7 @@ if (!reduce && nameEl) {
   const step = () => {
     nameEl.textContent = full.slice(0, ++i);
     if (i < full.length) setTimeout(step, 38);
-    else { h1.classList.remove("typing"); h1.style.minHeight = ""; }
+    else { h1.classList.remove("typing"); h1.classList.add("done"); h1.style.minHeight = ""; }
   };
   setTimeout(step, 250);
 }

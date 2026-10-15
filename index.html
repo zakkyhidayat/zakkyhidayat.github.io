@@ -6,8 +6,8 @@
   <title>Mochamad Zakky Hidayat · Government development planner</title>
   <meta name="description" content="Side projects and resume of a government development planner.">
   <link rel="canonical" href="https://zakkyhidayat.github.io/">
-  <meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0e0f10" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" id="tc-light" content="#fafaf7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" id="tc-dark" content="#0e0f10" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://zakkyhidayat.github.io/">
@@ -31,6 +31,10 @@
   <script>
     document.documentElement.classList.add("js");
     try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    window.setThemeColor = function (t) {
+      const c = t === "dark" ? "#0e0f10" : "#fafaf7";
+      ["tc-light", "tc-dark"].forEach(function (id) { const m = document.getElementById(id); if (m) m.content = c; });
+    };
   </script>
 </head>
 <body>
@@ -67,6 +71,7 @@
 
     <section class="block" id="projects-section">
       <h2 class="label"><span>01</span>Side projects</h2>
+      <p class="section-note">All hobby work, with code written together with AI. My role: the idea, the requirements, testing, and the final decisions.</p>
       <ul id="projects" class="projects"></ul>
     </section>
 
@@ -141,9 +146,14 @@
       </div>
     </section>
 
-    <section class="block note">
-      <h2 class="label"><span>03</span>About these projects</h2>
-      <p>All projects are hobby work, with code written together with AI. My role: the idea, the requirements, testing, and the final decisions.</p>
+    <section class="block contact" id="contact">
+      <h2 class="label"><span>03</span>Contact</h2>
+      <p class="contact-line">Questions about the projects or my work? Send an email.</p>
+      <p class="contact-actions">
+        <a class="btn" href="mailto:zakkyhidayat@gmail.com">zakkyhidayat@gmail.com</a>
+        <button type="button" id="copy-email" class="btn ghost" data-email="zakkyhidayat@gmail.com">Copy email</button>
+        <span id="copy-status" class="muted" role="status" aria-live="polite"></span>
+      </p>
     </section>
 
     </main>
