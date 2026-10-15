@@ -53,25 +53,13 @@ document.getElementById("theme-toggle").addEventListener("click", () => {
 });
 if (root.dataset.theme) setThemeColor(root.dataset.theme);
 
-// Copy email
-const copyBtn = document.getElementById("copy-email");
-const copyStatus = document.getElementById("copy-status");
-if (copyBtn) copyBtn.addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(copyBtn.dataset.email);
-    copyStatus.textContent = "Copied";
-  } catch (e) {
-    copyStatus.textContent = copyBtn.dataset.email;
-  }
-  setTimeout(() => { copyStatus.textContent = ""; }, 2500);
-});
 
 // ---------- motion layer ----------
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // 1. Reveal on scroll (cards stagger)
 const revealTargets = [
-  ...document.querySelectorAll(".block .label, .section-note, .cv-summary, .sub, .rows > li, .cv-grid > div, .contact-line, .contact-actions"),
+  ...document.querySelectorAll(".block .label, .section-note, .cv-summary, .sub, .rows > li, .cv-grid > div"),
   ...document.querySelectorAll(".project"),
 ];
 document.querySelectorAll(".project").forEach((el, i) => el.style.setProperty("--d", `${(i % 3) * 90}ms`));
