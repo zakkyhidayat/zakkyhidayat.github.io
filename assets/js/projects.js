@@ -29,7 +29,7 @@ const PROJECTS = [
     icon: "assets/img/projects/quran-icon.png",
     tint: "#1b6b4a",
     platform: "Android 8.0+",
-    version: "v0.5.2",
+    version: "v0.5.7",
     why: "Built because I wanted a simple, modern app that gets straight to reading, with audio recitation planned.",
     tags: ["App", "Quran", "Material 3"],
     repo: "https://github.com/zakkyhidayat/quran",
