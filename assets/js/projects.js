@@ -38,7 +38,8 @@ const PROJECTS = [
   {
     title: "Googlebook on ThinkPad",
     summary: "Personal patches that run Googlebook OS on a ThinkPad X13 Gen 2i: fingerprint enrollment, dual boot beside Fedora, and a boot that went from 68 s to 29 s.",
-    icon: "assets/img/projects/gbos-icon.svg",
+    icon: "assets/img/projects/gbos-icon.png",
+    plain: true,  // transparent artwork: no rounded square or shadow around the icon
     tint: "#334155",
     platform: "ThinkPad X13 Gen 2i",
     why: "Built on gbOS86 to run Googlebook on my own laptop. Personal use only, not a distribution.",
