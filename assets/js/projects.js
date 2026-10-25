@@ -35,4 +35,14 @@ const PROJECTS = [
     repo: "https://github.com/zakkyhidayat/quran",
     download: "https://github.com/zakkyhidayat/quran/releases",
   },
+  {
+    title: "Googlebook on ThinkPad",
+    summary: "Personal patches that run Googlebook OS on a ThinkPad X13 Gen 2i: fingerprint enrollment, dual boot beside Fedora, and a boot that went from 68 s to 29 s.",
+    icon: "assets/img/projects/gbos-icon.svg",
+    tint: "#334155",
+    platform: "ThinkPad X13 Gen 2i",
+    why: "Built on gbOS86 to run Googlebook on my own laptop. Personal use only, not a distribution.",
+    tags: ["Systems", "Android", "Linux"],
+    repo: "https://github.com/zakkyhidayat/gbos-x86-personal",
+  },
 ];
