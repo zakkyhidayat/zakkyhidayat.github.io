@@ -1,24 +1,24 @@
 const list = document.getElementById("projects");
 PROJECTS.forEach(p => {
   const li = document.createElement("li");
-  li.className = p.image ? "project" : "project icon-card";
+  li.className = "project";
   const links = [
-    p.live && `<a href="${p.live}">Open live ↗</a>`,
-    p.download && `<a href="${p.download}">Download ↗</a>`,
-    p.repo && `<a href="${p.repo}">Source ↗</a>`,
+    p.live && `<a href="${p.live}">Open live</a>`,
+    p.download && `<a href="${p.download}">Download</a>`,
+    p.repo && `<a href="${p.repo}">Source</a>`,
   ].filter(Boolean).join("");
   const media = p.image
-    ? `<div class="media"><img src="${p.image}" alt="Screenshot of ${p.title}" loading="lazy"></div>`
+    ? `<img src="${p.image}" alt="Screenshot of ${p.title}" loading="lazy">`
     : p.icon
-      ? `<div class="media icon-only"${p.tint ? ` style="--tint:${p.tint}"` : ""}><img${p.plain ? ' class="plain"' : ""} src="${p.icon}" alt="${p.title} icon" width="${p.plain ? 132 : 96}" height="${p.plain ? 94 : 96}" loading="lazy"></div>`
-      : `<div class="media"><div class="placeholder">No image yet</div></div>`;
-  const titleIcon = p.icon && p.image ? `<img class="app-icon" src="${p.icon}" alt="" width="26" height="26">` : "";
+      ? `<img${p.plain ? ' class="plain"' : ""} src="${p.icon}" alt="${p.title} icon" width="80" height="${p.plain ? 57 : 80}" loading="lazy">`
+      : "";
+  const meta = [p.platform, p.version].filter(Boolean).map(m => `<span>${m}</span>`).join("");
   li.innerHTML = `
-    ${media}
+    <div class="media">${media}</div>
     <div class="body">
-      <div class="project-head"><span class="meta">${[p.platform, p.version].filter(Boolean).join(" · ")}</span></div>
-      <h3>${titleIcon}${p.title}</h3>
-      <p>${p.summary}</p>
+      ${meta ? `<p class="meta">${meta}</p>` : ""}
+      <h3>${p.title}</h3>
+      <p class="summary">${p.summary}</p>
       ${p.why ? `<p class="why">${p.why}</p>` : ""}
       <div class="tags">${p.tags.map(t => `<span>${t}</span>`).join("")}</div>
       <div class="project-links">${links}</div>
@@ -30,7 +30,7 @@ PROJECTS.forEach(p => {
 const clock = document.getElementById("clock");
 const tick = () => {
   const t = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" }).format(new Date());
-  clock.textContent = `Bandung · ${t} WIB`;
+  clock.textContent = `Bandung, ${t} WIB`;
 };
 tick();
 setInterval(tick, 30000);
@@ -47,84 +47,3 @@ document.getElementById("theme-toggle").addEventListener("click", () => {
   setThemeColor(root.dataset.theme);
 });
 if (root.dataset.theme) setThemeColor(root.dataset.theme);
-
-
-// ---------- motion layer ----------
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// 1. Reveal on scroll (cards stagger)
-const revealTargets = [
-  ...document.querySelectorAll(".block .label, .section-note, .cv-summary, .sub, .rows > li, .cv-grid > div"),
-  ...document.querySelectorAll(".project"),
-];
-document.querySelectorAll(".project").forEach((el, i) => el.style.setProperty("--d", `${(i % 3) * 90}ms`));
-revealTargets.forEach(el => el.classList.add("reveal"));
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); revealObs.unobserve(e.target); } });
-}, { rootMargin: "0px 0px -8% 0px" });
-revealTargets.forEach(el => revealObs.observe(el));
-
-// 2. Type the name once
-const nameEl = document.getElementById("name");
-if (reduce) nameEl && nameEl.parentElement.classList.add("done");
-if (!reduce && nameEl) {
-  const full = nameEl.textContent;
-  const h1 = nameEl.parentElement;
-  h1.style.minHeight = `${h1.offsetHeight}px`;
-  nameEl.textContent = "";
-  h1.classList.add("typing");
-  let i = 0;
-  const step = () => {
-    nameEl.textContent = full.slice(0, ++i);
-    if (i < full.length) setTimeout(step, 38);
-    else { h1.classList.remove("typing"); h1.classList.add("done"); h1.style.minHeight = ""; }
-  };
-  setTimeout(step, 250);
-}
-
-// 3. Current section in nav
-const nav = document.querySelector(".top");
-const where = document.getElementById("where");
-const sections = [...document.querySelectorAll("section.block")].filter(s => !s.hidden);
-const sectionObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const label = e.target.querySelector(".label");
-    const num = label.querySelector("span").textContent;
-    const text = label.textContent.replace(num, "").trim();
-    where.innerHTML = `<b>${num}</b>${text}`;
-    where.classList.add("on");
-  });
-}, { rootMargin: "-45% 0px -50% 0px" });
-sections.forEach(s => sectionObs.observe(s));
-
-let ticking = false;
-const onScroll = () => {
-  const y = scrollY;
-  nav.classList.toggle("scrolled", y > 8);
-  if (y < innerHeight * 0.5) where.classList.remove("on");
-  ticking = false;
-};
-addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
-addEventListener("resize", onScroll);
-onScroll();
-
-// 4. Reading focus on resume rows: only the row nearest the middle of the screen
-const rowLists = [...document.querySelectorAll(".rows")];
-const focusRows = () => {
-  const mid = innerHeight / 2;
-  rowLists.forEach(list => {
-    const lr = list.getBoundingClientRect();
-    const inBand = lr.top < mid && lr.bottom > mid;
-    let best = null, bestD = Infinity;
-    if (inBand) [...list.children].forEach(li => {
-      const r = li.getBoundingClientRect();
-      const d = Math.abs(r.top + r.height / 2 - mid);
-      if (d < bestD) { bestD = d; best = li; }
-    });
-    [...list.children].forEach(li => li.classList.toggle("active", li === best));
-    list.classList.toggle("reading", !!best);
-  });
-};
-addEventListener("scroll", () => requestAnimationFrame(focusRows), { passive: true });
-focusRows();
