@@ -57,4 +57,15 @@ const PROJECTS = [
     repo: "https://github.com/zakkyhidayat/officeport",
     download: "https://github.com/zakkyhidayat/officeport/releases",
   },
+  {
+    title: "Full Tilt! Pinball for Android",
+    summary: "Full Tilt! Pinball on Android: the Space Cadet table with its original rules, plus Dragon's Keep and Skulduggery rebuilt from the game's code. Bring your own copy of the game.",
+    icon: "assets/img/projects/pinball-icon.png",
+    platform: "Android",
+    version: "v0.5.4",
+    why: "A fork of an MIT-licensed port. The app ships no game data: you point it at your own copy of the game.",
+    tags: ["App", "Java", "Android"],
+    repo: "https://github.com/zakkyhidayat/ftpinball-android",
+    download: "https://github.com/zakkyhidayat/ftpinball-android/releases",
+  },
 ];
