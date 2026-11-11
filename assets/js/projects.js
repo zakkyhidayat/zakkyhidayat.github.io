@@ -68,4 +68,13 @@ const PROJECTS = [
     repo: "https://github.com/zakkyhidayat/ftpinball-android",
     download: "https://github.com/zakkyhidayat/ftpinball-android/releases",
   },
+  {
+    title: "SidePin",
+    summary: "A KWin script for KDE Plasma 6 that pins any window to the right edge as a floating side panel. It hides when you are not using it, and hovering the edge brings it back.",
+    platform: "KDE Plasma 6",
+    version: "v3.0.0",
+    why: "Built to get macOS-style side stashing on KDE Wayland. Vibe-coded, so the code is not perfectly idiomatic; forks welcome.",
+    tags: ["Desktop", "KWin", "Open source"],
+    repo: "https://github.com/zakkyhidayat/sidepin-kwin",
+  },
 ];
