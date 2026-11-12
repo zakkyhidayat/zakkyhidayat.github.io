@@ -77,4 +77,13 @@ const PROJECTS = [
     tags: ["Desktop", "KWin", "Open source"],
     repo: "https://github.com/zakkyhidayat/sidepin-kwin",
   },
+  {
+    title: "Material 3 GRUB theme",
+    summary: "A dark Material 3 theme for the GRUB boot menu, with a generator script that rebuilds it from its colours and layout, and an installer that asks before each step.",
+    icon: "assets/img/projects/grub-icon.png",
+    platform: "GRUB 2 on Fedora",
+    why: "The installer is a dry run by default and changes nothing until you pass --run.",
+    tags: ["Design", "Linux", "GRUB"],
+    repo: "https://github.com/zakkyhidayat/material3-grub",
+  },
 ];
