@@ -83,7 +83,7 @@ const PROJECTS = [
     icon: "assets/img/projects/grub-icon.png",
     platform: "GRUB 2 on Fedora",
     why: "The installer is a dry run by default and changes nothing until you pass --run.",
-    tags: ["Design", "Linux", "GRUB"],
+    tags: ["Design", "Linux", "GRUB", "Open source"],
     repo: "https://github.com/zakkyhidayat/material3-grub",
   },
 ];
